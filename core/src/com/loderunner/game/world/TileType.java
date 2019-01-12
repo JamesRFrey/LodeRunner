@@ -4,11 +4,11 @@ import java.util.HashMap;
 
 public enum TileType {
 	GRASS(1, true, "Grass"),
-	DIRT(2, true, "Dirt"),
-	SKY(3, false, "Sky"),
-	LAVA(4, true, "Lava"),
-	CLOUD(5, true, "Cloud"),
-	STONE(6, true, "Stone");
+	BRICK(2, true, "Brick"),
+	LADDER(3, false, "Ladder"),
+	GOLD(7, true, "Gold"),
+	GOOP(36, true, "Goop"),
+	EXIT(47, true, "Exit");
 	
 	public static final int TILE_SIZE = 44;
 	
