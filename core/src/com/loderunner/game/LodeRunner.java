@@ -4,30 +4,25 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.loderunner.game.world.GameMap;
-import com.loderunner.game.world.TileType;
 import com.loderunner.game.world.TiledGameMap;
 
 public class LodeRunner extends ApplicationAdapter {
-	OrthographicCamera cam;
+	OrthographicCamera camera;
 	SpriteBatch batch;
-	Texture img;
 	
 	GameMap gameMap;
+	
+	float deltaX, deltaY;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
 		
-		cam = new OrthographicCamera();
-		cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.update();
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera.update();
 		
 		gameMap = new TiledGameMap();
 	}
@@ -35,29 +30,18 @@ public class LodeRunner extends ApplicationAdapter {
 	@Override
 	public void render () {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		if(Gdx.input.isTouched()) {
-			cam.translate(-Gdx.input.getDeltaX(), Gdx.input.getDeltaY());
-			cam.update();
-		}
+		camera.update();
+		gameMap.update(Gdx.graphics.getDeltaTime());
+		gameMap.render(camera, batch);
 		
-		if (Gdx.input.justTouched()) {
-			//converts click coordinates to game world coordinates
-			Vector3 pos = cam.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-			TileType type = gameMap.getTileTypeByLocation(1, pos.x, pos.y);
-			
-			if (type != null) {
-				System.out.println("You clicked on tile with id " + type.getId() + "  " + type.getName() + "  " + type.isCollidable() + "  " + type.getDamage());
-			}
-		}
-		
-		gameMap.render(cam);
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+		gameMap.dispose();
 	}
 }
