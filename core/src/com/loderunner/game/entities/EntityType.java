@@ -2,7 +2,7 @@ package com.loderunner.game.entities;
 
 public enum EntityType {
 	
-	PLAYER("player", 14, 32, 40);
+	PLAYER("player", 16, 16, 40);
 	
 	private String id;
 	private int width, height;

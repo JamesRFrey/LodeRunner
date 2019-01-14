@@ -3,14 +3,15 @@ package com.loderunner.game.world;
 import java.util.HashMap;
 
 public enum TileType {
+	AIR(0, false, "Air"),
 	GRASS(1, true, "Grass"),
 	BRICK(2, true, "Brick"),
 	LADDER(3, false, "Ladder"),
-	GOLD(7, true, "Gold"),
+	GOLD(7, false, "Gold"),
 	GOOP(36, true, "Goop"),
-	EXIT(47, true, "Exit");
+	EXIT(47, false, "Exit");
 	
-	public static final int TILE_SIZE = 44;
+	public static final int TILE_SIZE = 16;
 	
 	private int id;
 	private boolean collidable;
@@ -18,7 +19,7 @@ public enum TileType {
 	private float damage;
 	
 	private TileType(int id, boolean collidable, String name) {
-		
+		this(id, collidable, name, 0);
 	}
 	private TileType(int id, boolean collidable, String name, float damage) {
 		this.id = id;
