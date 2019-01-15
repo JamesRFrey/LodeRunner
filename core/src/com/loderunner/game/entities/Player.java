@@ -9,7 +9,6 @@ import com.loderunner.game.world.GameMap;
 public class Player extends Entity {
 
 	private static final int SPEED = 80;
-	private static final int JUMP_VELOCITY = 5;
 	
 	
 	Texture image;
@@ -20,23 +19,22 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void update(float deltaTime, float gravity) {
+	public void update(float deltaTime) {
 		//jumping logic
-		if (Gdx.input.isKeyPressed(Keys.SPACE) && grounded) {
-			this.velocityY += JUMP_VELOCITY * getWeight();
-		} else if (Gdx.input.isKeyPressed(Keys.SPACE) && !grounded && this.velocityY > 0) {
-			//if spacebar is held, jump with stronger velocity
-			this.velocityY += JUMP_VELOCITY * getWeight() * deltaTime;
+		if (falling) {
+			this.velocityY -= getWeight();
+		} else {
+			this.velocityY = 0;
 		}
 		
-		super.update(deltaTime, gravity); //applies gravity
+		super.update(deltaTime); //applies gravity
 		
 		//move left
-		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
+		if(Gdx.input.isKeyPressed(Keys.LEFT) && !falling) {
 			moveX(-SPEED * deltaTime);
 		}
 		//move right
-		if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		if(Gdx.input.isKeyPressed(Keys.RIGHT) && !falling) {
 			moveX(SPEED * deltaTime);
 		}
 	}

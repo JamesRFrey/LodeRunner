@@ -9,7 +9,7 @@ public abstract class Entity {
 	protected EntityType type;
 	protected float velocityY = 0;
 	protected GameMap map;
-	protected boolean grounded = false;
+	protected boolean falling = false;
 	
 	public Entity(float x, float y, EntityType type, GameMap map) {
 		this.position = new Vector2(x, y);
@@ -17,23 +17,23 @@ public abstract class Entity {
 		this.map = map;
 	}
 	
-	public void update(float deltaTime, float gravity) {
+	public void update(float deltaTime) {
 		//gravity logic
 		float newY = position.y;
 		
-		this.velocityY += gravity * deltaTime * getWeight();
-		newY += this.velocityY * deltaTime;
+		this.velocityY *= deltaTime;
+		newY += this.velocityY;
 		
 		//System.out.println(map.doesRectCollideWithMap(position.x, newY, getWidth(), getHeight()));
 		if (map.doesRectCollideWithMap(position.x, newY, getWidth(), getHeight())) {
 			if(velocityY < 0) {
 				this.position.y = (float)Math.floor(position.y);
-				grounded = true;
+				falling = false;
 			}
 			this.velocityY = 0;
 		} else {
 			this.position.y = newY;
-			grounded = false;
+			falling = true;
 		}
 	}
 	
@@ -74,8 +74,8 @@ public abstract class Entity {
 		return type.getWeight();
 	}
 
-	public boolean isGrounded() {
-		return grounded;
+	public boolean isFalling() {
+		return falling;
 	}
 	
 	

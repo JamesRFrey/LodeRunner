@@ -2,7 +2,10 @@ package com.loderunner.game.world;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.loderunner.game.entities.Entity;
 import com.loderunner.game.entities.Player;
@@ -13,17 +16,20 @@ public abstract class GameMap {
 	
 	public GameMap() {
 		entities = new ArrayList<Entity>();
-		entities.add(new Player(40, 32, this));
+		entities.add(new Player(40, 128, this));
 	}
 	
 	public void render (OrthographicCamera camera, SpriteBatch batch) {
+		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		//Texture img = new Texture("jake_walk1.png");
+		//batch.draw(img, 0f, 0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), 0, 0, 3, 3);
 		for(Entity entity : entities) {
 			entity.render(batch);
 		}
 	}
 	public void update (float delta) {
 		for(Entity entity : entities) {
-			entity.update(delta, -9.8f);
+			entity.update(delta);
 		}
 	}
 	
