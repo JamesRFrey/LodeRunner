@@ -1,0 +1,19 @@
+Layers (front to back):
+
+*front-most layer*
+
+- mini/big bomb explosion
+- gun gas
+- pick axe rubble
+- goop animation
+- active mini/big bombs
+- Turf
+- Monks
+- Jane Peril
+- Digmo
+- Wes Reckless
+- Jake Peril
+- items (gold), teleporters
+- Exits, hideouts, ladders, monkeybars, trapdoors, blown-up turf
+
+*back-most layer*
